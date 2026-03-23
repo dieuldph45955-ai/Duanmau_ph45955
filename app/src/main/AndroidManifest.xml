@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Duanmau_Ph45955">
         <activity
+            android:name=".ui.QuanLyKhachHangActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.QuanLySanPhamActivity"
             android:exported="false" />
         <activity
