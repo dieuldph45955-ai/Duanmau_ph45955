@@ -10,13 +10,13 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.duanmau_ph45955.R;
 
-public class GioHangActivity extends AppCompatActivity {
+public class QuanLySanPhamActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_gio_hang);
+        setContentView(R.layout.activity_quan_ly_san_pham);
 
     }
 }
