@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Duanmau_Ph45955">
         <activity
+            android:name=".ui.ThongKeKhachHangActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.ThongKeDoanhThuActivity"
             android:exported="false" />
         <activity
