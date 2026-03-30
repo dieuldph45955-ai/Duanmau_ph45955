@@ -26,14 +26,14 @@ public class DoiMatKhauActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-
         setContentView(R.layout.activity_doi_mat_khau);
+
         edtMatKhauCu = findViewById(R.id.edtOldPassword);
         edtMatKhauMoi = findViewById(R.id.edtNewPassword);
         edtNhapLaiMatKhauMoi = findViewById(R.id.edtConfirmPassword);
         btnLuu = findViewById(R.id.btnLuu);
         btnHuy = findViewById(R.id.btnHuy);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Đổi mật khẩu");
