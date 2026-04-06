@@ -18,9 +18,6 @@ import com.example.duanmau_ph45955.model.TopKhachHang;
 import com.example.duanmau_ph45955.model.TopSanPham;
 import java.util.ArrayList;
 import java.util.List;
-
-
-
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TEN_CSDL = "JPMart.db";
     private static final int PHIEN_BAN_CSDL = 25;

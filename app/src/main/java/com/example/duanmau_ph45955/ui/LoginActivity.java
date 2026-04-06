@@ -214,30 +214,31 @@ public class LoginActivity extends AppCompatActivity {
         db.themDanhMuc(new DanhMuc("DM020", "Sách - Văn hóa phẩm"));
     }
 
+
     public void taoDuLieuNhanVien() {
         DatabaseHelper db = new DatabaseHelper(this);
 
-        db.themNhanVien(new NhanVien("dieu123", "Lê Đình Điểu (admin)", "12 Lý Tự Trọng, Q1, TP.HCM", 1, 25000000, "dieu123"));
-        db.themNhanVien(new NhanVien("NV001", "Đoàn Thị Thương", "34 Lê Lợi,Hà Đông, Hà Nội", 0, 16000000, "NV001"));
-        db.themNhanVien(new NhanVien("NV002", "Trần Thị Cúc", "34 Lê Lợi, Q3, TP.HCM", 0, 12000000, "NV002"));
-        db.themNhanVien(new NhanVien("NV003", "Lê Minh Hùng", "56 Trần Hưng Đạo, Hà Nội", 0, 20000000, "NV003"));
-        db.themNhanVien(new NhanVien("NV004", "Phạm Đức Thịnh", "78 Nguyễn Du, Đà Nẵng", 0, 9000000, "NV004"));
-        db.themNhanVien(new NhanVien("NV005", "Võ Hoàng Yến", "90 Pasteur, Hải Phòng", 0, 11000000, "NV005"));
-        db.themNhanVien(new NhanVien("NV006", "Bùi Văn Hòa", "21 Phan Đình Phùng, Nha Trang", 0, 18000000, "NV006"));
-        db.themNhanVien(new NhanVien("NV007", "Đặng Ngọc Hiếu", "43 Hoàng Hoa Thám, Huế", 0, 7000000, "NV007"));
-        db.themNhanVien(new NhanVien("NV008", "Ngô Thanh Bình", "65 Cách Mạng Tháng 8, Vũng Tàu", 0, 15000000, "NV008"));
-        db.themNhanVien(new NhanVien("NV009", "Hoàng Thị Dung", "87 Hai Bà Trưng, Biên Hòa", 0, 17000000, "NV009"));
-        db.themNhanVien(new NhanVien("NV010", "Trương Đình Khoa", "109 Nguyễn Văn Trỗi, Bình Dương", 0, 8000000, "NV010"));
-        db.themNhanVien(new NhanVien("NV011", "Đoàn Thanh Tùng", "121 Điện Biên Phủ, Long An", 0, 10000000, "NV011"));
-        db.themNhanVien(new NhanVien("NV012", "Mai Thị Lan", "143 Võ Văn Kiệt, Tây Ninh", 0, 9500000, "NV012"));
-        db.themNhanVien(new NhanVien("NV013", "Phan Ngọc Quỳnh", "165 Tôn Đức Thắng, Vĩnh Long", 0, 11000000, "NV013"));
-        db.themNhanVien(new NhanVien("NV014", "Trần Hoàng Nam", "187 Nguyễn Tri Phương, Sóc Trăng", 0, 22000000, "NV014"));
-        db.themNhanVien(new NhanVien("NV015", "Nguyễn Thị Bích", "209 Trần Quang Khải, Bạc Liêu", 0, 24000000, "NV015"));
-        db.themNhanVien(new NhanVien("NV016", "Lý Mạnh Phát", "231 Nguyễn Đình Chiểu, Cà Mau", 0, 10500000, "NV016"));
-        db.themNhanVien(new NhanVien("NV017", "Vương Hữu Đạt", "253 Võ Thị Sáu, Đắk Lắk", 0, 9800000, "NV017"));
-        db.themNhanVien(new NhanVien("NV018", "Hà Thanh Hải", "275 Bạch Đằng, Gia Lai", 0, 13000000, "NV018"));
-        db.themNhanVien(new NhanVien("NV019", "Trịnh Minh Lộc", "297 Đống Đa, Kon Tum", 0, 12000000, "NV019"));
-        db.themNhanVien(new NhanVien("NV020", "Tống Hoàng Tú", "319 Hùng Vương, Phú Yên", 0, 16000000, "NV020"));
+        db.themNhanVien(new NhanVien("dieu123", "admin", "Hà Nội", 1, 25000000, "dieu123"));
+        db.themNhanVien(new NhanVien("NV001", "Nguyễn Văn An", "12 Trần Phú, Ba Đình, Hà Nội", 0, 16000000, "NV001"));
+        db.themNhanVien(new NhanVien("NV002", "Trần Thị Mai", "45 Lý Thường Kiệt, Hoàn Kiếm, Hà Nội", 0, 12000000, "NV002"));
+        db.themNhanVien(new NhanVien("NV003", "Lê Quốc Bảo", "78 Nguyễn Trãi, Thanh Xuân, Hà Nội", 0, 20000000, "NV003"));
+        db.themNhanVien(new NhanVien("NV004", "Phạm Minh Tuấn", "23 Phạm Văn Đồng, Cầu Giấy, Hà Nội", 0, 9000000, "NV004"));
+        db.themNhanVien(new NhanVien("NV005", "Hoàng Thị Linh", "56 Hồ Tùng Mậu, Nam Từ Liêm, Hà Nội", 0, 11000000, "NV005"));
+        db.themNhanVien(new NhanVien("NV006", "Đỗ Văn Nam", "89 Xuân Thủy, Cầu Giấy, Hà Nội", 0, 18000000, "NV006"));
+        db.themNhanVien(new NhanVien("NV007", "Bùi Thị Hạnh", "34 Kim Mã, Ba Đình, Hà Nội", 0, 7000000, "NV007"));
+        db.themNhanVien(new NhanVien("NV008", "Nguyễn Thanh Sơn", "67 Nguyễn Chí Thanh, Đống Đa, Hà Nội", 0, 15000000, "NV008"));
+        db.themNhanVien(new NhanVien("NV009", "Vũ Thị Ngọc", "91 Tây Sơn, Đống Đa, Hà Nội", 0, 17000000, "NV009"));
+        db.themNhanVien(new NhanVien("NV010", "Trịnh Văn Hùng", "15 Giải Phóng, Hai Bà Trưng, Hà Nội", 0, 8000000, "NV010"));
+        db.themNhanVien(new NhanVien("NV011", "Phan Thị Thu", "28 Đại Cồ Việt, Hai Bà Trưng, Hà Nội", 0, 10000000, "NV011"));
+        db.themNhanVien(new NhanVien("NV012", "Ngô Minh Đức", "63 Trường Chinh, Thanh Xuân, Hà Nội", 0, 9500000, "NV012"));
+        db.themNhanVien(new NhanVien("NV013", "Lý Thị Hương", "102 Nguyễn Xiển, Thanh Xuân, Hà Nội", 0, 11000000, "NV013"));
+        db.themNhanVien(new NhanVien("NV014", "Đặng Quang Vinh", "150 Phạm Hùng, Nam Từ Liêm, Hà Nội", 0, 22000000, "NV014"));
+        db.themNhanVien(new NhanVien("NV015", "Tạ Thị Lan", "200 Lê Văn Lương, Thanh Xuân, Hà Nội", 0, 24000000, "NV015"));
+        db.themNhanVien(new NhanVien("NV016", "Chu Văn Khánh", "18 Nguyễn Khang, Cầu Giấy, Hà Nội", 0, 10500000, "NV016"));
+        db.themNhanVien(new NhanVien("NV017", "Đinh Thị Trang", "75 Hoàng Quốc Việt, Cầu Giấy, Hà Nội", 0, 9800000, "NV017"));
+        db.themNhanVien(new NhanVien("NV018", "Phùng Văn Hải", "210 Âu Cơ, Tây Hồ, Hà Nội", 0, 13000000, "NV018"));
+        db.themNhanVien(new NhanVien("NV019", "Mai Quang Huy", "33 Nghi Tàm, Tây Hồ, Hà Nội", 0, 12000000, "NV019"));
+        db.themNhanVien(new NhanVien("NV020", "Lương Thị Nhung", "88 Võ Chí Công, Tây Hồ, Hà Nội", 0, 16000000, "NV020"));
     }
 
     public void taoDuLieuHoaDon() {
