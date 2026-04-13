@@ -4,18 +4,17 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.duanmau_ph45955.R;
 import com.example.duanmau_ph45955.database.DatabaseHelper;
 
+import java.text.NumberFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class ThongKeDoanhThuActivity extends AppCompatActivity {
     private EditText edtNgayBatDau, edtNgayKetThuc;
@@ -29,8 +28,10 @@ public class ThongKeDoanhThuActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Thống kê doanh thu");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Thống kê doanh thu");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         databaseHelper = new DatabaseHelper(this);
 
         edtNgayBatDau = findViewById(R.id.edtNgayBatDau);
@@ -39,16 +40,21 @@ public class ThongKeDoanhThuActivity extends AppCompatActivity {
 
         edtNgayBatDau.setOnClickListener(v -> showDatePickerDialog(edtNgayBatDau));
         edtNgayKetThuc.setOnClickListener(v -> showDatePickerDialog(edtNgayKetThuc));
+
         findViewById(R.id.btnThongKeDoanhThu).setOnClickListener(v -> {
             String ngayBatDau = edtNgayBatDau.getText().toString().trim();
             String ngayKetThuc = edtNgayKetThuc.getText().toString().trim();
+
             if (ngayBatDau.isEmpty() || ngayKetThuc.isEmpty()) {
-                tvDoanhThu.setText("Vui lòng nhập đầy đủ ngày bắt đầu và ngày kết thúc.");
+                Toast.makeText(this, "Vui lòng chọn đầy đủ ngày!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             int doanhThu = databaseHelper.layDoanhThu(ngayBatDau, ngayKetThuc);
-            tvDoanhThu.setText("Doanh thu: " + doanhThu + " VND");
+            
+            // Định dạng tiền tệ cho đẹp (Ví dụ: 1.000.000 VND)
+            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+            tvDoanhThu.setText("Tổng doanh thu: " + currencyFormat.format(doanhThu));
         });
     }
 
@@ -67,7 +73,8 @@ public class ThongKeDoanhThuActivity extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
                 (view, selectedYear, selectedMonth, selectedDay) -> {
-                    String selectedDate = String.format("%02d/%02d/%04d", selectedDay, selectedMonth, selectedYear);
+                    // SỬA TẠI ĐÂY: Chuyển về định dạng YYYY-MM-DD để khớp với Database
+                    String selectedDate = String.format("%04d-%02d-%02d", selectedYear, (selectedMonth + 1), selectedDay);
                     editText.setText(selectedDate);
                 },
                 year, month, day
