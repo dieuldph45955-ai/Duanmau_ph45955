@@ -8,11 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.duanmau_ph45955.R;
 import com.example.duanmau_ph45955.database.DatabaseHelper;
@@ -37,18 +33,18 @@ public class EditNhanVienActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_nhan_vien);
 
         db = new DatabaseHelper(this);
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
         edtMaNhanVien = findViewById(R.id.edtMaNhanVien);
         edtTenNhanVien = findViewById(R.id.edtTenNhanVien);
         edtDiaChi = findViewById(R.id.edtDiaChi);
         edtLuong = findViewById(R.id.edtLuong);
         edtMatKhau = findViewById(R.id.edtMatKhau);
+        spChucVu = findViewById(R.id.spChucVu);
+        LinearLayout layoutMaNhanVien = findViewById(R.id.layoutMaNhanVien);
 
         findViewById(R.id.btnLuu).setOnClickListener(v -> luuNhanVien());
         findViewById(R.id.btnHuy).setOnClickListener(v -> finish());
-        LinearLayout layoutMaNhanVien = findViewById(R.id.layoutMaNhanVien);
-        spChucVu = findViewById(R.id.spChucVu);
 
+        // Thiết lập Spinner Chức vụ
         chucVuList = new ArrayList<>();
         chucVuList.add(new ChucVu(0, "Nhân viên"));
         chucVuList.add(new ChucVu(1, "Quản lý"));
@@ -60,12 +56,15 @@ public class EditNhanVienActivity extends AppCompatActivity {
         if (type == 0) { // Edit
             edtMaNhanVien.setEnabled(false);
             NhanVien nhanVien = getIntent().getParcelableExtra(QuanLyNhanVienActivity.NHAN_VIEN);
-            edtMaNhanVien.setText(nhanVien.getMaNhanVien());
-            edtTenNhanVien.setText(nhanVien.getTenNhanVien());
-            edtDiaChi.setText(nhanVien.getDiaChi());
-            edtLuong.setText(currencyFormat.format(nhanVien.getLuong()));
-            edtMatKhau.setText(nhanVien.getMatKhau());
-            setSelectedChucVu(nhanVien.getChucVu());
+            if (nhanVien != null) {
+                edtMaNhanVien.setText(nhanVien.getMaNhanVien());
+                edtTenNhanVien.setText(nhanVien.getTenNhanVien());
+                edtDiaChi.setText(nhanVien.getDiaChi());
+                // Hiển thị lương dạng số nguyên để dễ sửa
+                edtLuong.setText(String.valueOf((int)nhanVien.getLuong()));
+                edtMatKhau.setText(nhanVien.getMatKhau());
+                setSelectedChucVu(nhanVien.getChucVu());
+            }
         } else if (type == 1) { // Add
             layoutMaNhanVien.setVisibility(View.GONE);
         }
@@ -81,27 +80,38 @@ public class EditNhanVienActivity extends AppCompatActivity {
     }
 
     private void luuNhanVien() {
-        String maNhanVien = edtMaNhanVien.getText().toString().trim();
         String tenNhanVien = edtTenNhanVien.getText().toString().trim();
         String diaChi = edtDiaChi.getText().toString().trim();
-        int chucVu = ((ChucVu)spChucVu.getSelectedItem()).getChucVuCode();
-        double luong = Double.parseDouble(edtLuong.getText().toString().replaceAll("[^\\d]", "").trim());  // chỉ giữ lại số, bỏ dấu chấm
+        String luongStr = edtLuong.getText().toString().replaceAll("[^\\d]", "").trim();
         String matKhau = edtMatKhau.getText().toString().trim();
 
+        // 1. Kiểm tra trống dữ liệu
+        if (tenNhanVien.isEmpty() || luongStr.isEmpty() || matKhau.isEmpty()) {
+            Toast.makeText(this, "Vui lòng nhập đầy đủ Tên, Lương và Mật khẩu!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        double luong = Double.parseDouble(luongStr);
+        int chucVu = ((ChucVu) spChucVu.getSelectedItem()).getChucVuCode();
+        String maNhanVien;
         boolean isOK;
-        if (type == 0) { // Edit
-            NhanVien nhanVien = new NhanVien(maNhanVien, tenNhanVien, diaChi, chucVu, luong, matKhau);
-            isOK = db.suaNhanVien(nhanVien);
-        } else { // Add new
-            maNhanVien = db.taoMaNhanVienMoi();
-            NhanVien nhanVien = new NhanVien(maNhanVien, tenNhanVien, diaChi, chucVu, luong, matKhau);
-            isOK = db.themNhanVien(nhanVien);
+
+        if (type == 0) { // Cập nhật
+            maNhanVien = edtMaNhanVien.getText().toString().trim();
+            NhanVien nv = new NhanVien(maNhanVien, tenNhanVien, diaChi, chucVu, luong, matKhau);
+            isOK = db.suaNhanVien(nv);
+        } else { // Thêm mới
+            maNhanVien = db.taoMaNhanVienMoi(); // Tự động tạo mã NV
+            NhanVien nv = new NhanVien(maNhanVien, tenNhanVien, diaChi, chucVu, luong, matKhau);
+            isOK = db.themNhanVien(nv);
         }
+
         if (isOK) {
-            Toast.makeText(this, (type == 0)? "Cập nhật": "Thêm" + " nhân viên thành công", Toast.LENGTH_SHORT).show();
+            String message = (type == 0 ? "Cập nhật" : "Thêm") + " nhân viên thành công!";
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            finish();
         } else {
-            Toast.makeText(this, (type == 0)? "Cập nhật": "Thêm" + " nhân viên thất bại", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Thao tác thất bại!", Toast.LENGTH_SHORT).show();
         }
-        finish();
     }
 }

@@ -226,8 +226,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String tenTrongDB = cursor.getString(1); // Cột tên nhân viên
                 int chucVu = cursor.getInt(3);          // Cột chức vụ (0 là nhân viên, 1 là quản lý)
 
-                // 2. CHỈ SỬA Ở ĐÂY: Thêm điều kiện chucVu == 0
-                // Điều này đảm bảo tài khoản Admin (chucVu = 1) sẽ bị loại bỏ khỏi danh sách này
+                // CHỈ LẤY NHÂN VIÊN (chucVu == 0)
                 if (removeAccent(tenTrongDB).toLowerCase().contains(key) && chucVu == 0) {
                     ketQua.add(new NhanVien(
                             cursor.getString(0),
@@ -241,7 +240,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         cursor.close();
-        db.close(); // Nên đóng db để tránh rò rỉ bộ nhớ
+        db.close();
         return ketQua;
     }
     public boolean xoaSanPham(String maSanPham) {
@@ -405,7 +404,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<NhanVien> danhSachNhanVien = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        // THÊM ĐIỀU KIỆN: WHERE chucVu = 0 (Chỉ lấy nhân viên, bỏ qua quản lý)
+        // CHỈ LẤY NHÂN VIÊN (chucVu == 0)
         Cursor cursor = db.rawQuery("SELECT * FROM " + BANG_NHANVIEN + " WHERE " + COT_CHUC_VU + " = 0", null);
 
         if (cursor.moveToFirst()) {
@@ -584,14 +583,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String maNhanVienMoi = "NV1";
 
+        // CHỈ LẤY NHỮNG MÃ BẮT ĐẦU BẰNG "NV" ĐỂ TRÁNH LỖI KHI CÓ ADMIN "dieu123"
         String query = "SELECT " + COT_MA_NHANVIEN + " FROM " + BANG_NHANVIEN +
-                " ORDER BY " + COT_MA_NHANVIEN + " DESC LIMIT 1";
+                " WHERE " + COT_MA_NHANVIEN + " LIKE 'NV%'" +
+                " ORDER BY length(" + COT_MA_NHANVIEN + ") DESC, " + COT_MA_NHANVIEN + " DESC LIMIT 1";
 
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             String lastMaNhanVien = cursor.getString(0);
-            int lastNumber = Integer.parseInt(lastMaNhanVien.replace("NV", ""));
-            maNhanVienMoi = "NV" + (lastNumber + 1);
+            try {
+                int lastNumber = Integer.parseInt(lastMaNhanVien.replace("NV", ""));
+                maNhanVienMoi = "NV" + (lastNumber + 1);
+            } catch (Exception e) {
+                maNhanVienMoi = "NV" + (cursor.getCount() + 1);
+            }
         }
 
         cursor.close();
